@@ -29,15 +29,14 @@ background:#222;
 }
 
 .right{
-    background: 
-    
-linear-gradient(rgba(255,255,0.90)
+    background:
+    linear-gradient(
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.2)
+    ),
+    url("images (2).jpeg");
 
-      rgba(255,255,0.90))
-      url("images (2).jpeg");
-      background-size: cover;
-
-
+    background-size: cover;
 }
 
 body{
@@ -72,6 +71,13 @@ body{
     display:flex;
     box-shadow:0 5px 20px rgba(0,0,0,0.2);
 }
+.fill{
+    animation: grow 2s ease forwards;
+}
+
+@keyframes grow{
+    from{width:0;}
+}
 
 .left{
     width:35%;
@@ -95,6 +101,11 @@ body{
     object-fit:cover;
     border-radius:50%;
     border:8px solid #fff;
+}
+.profile img:hover{
+    transform:scale(1.05);
+    transition:0.5s;
+    box-shadow:0 0 40px cyan;
 }
 
 h1{
@@ -146,6 +157,23 @@ p,li{
     border-radius:20px;
     background:linear-gradient(90deg,#00c6ff,#0072ff);
 }
+#themeBtn{
+    padding:10px 20px;
+    border:none;
+    border-radius:20px;
+    cursor:pointer;
+}
+
+.light-mode{
+    background:white;
+    color:black;
+}
+
+.light-mode .left{
+    background:#f0f0f0;
+    color:black;
+    }
+
 .right{
     width:65%;
     padding:30px;
@@ -321,6 +349,7 @@ a:hover{
     <div class="right">
 
         <div class="section">
+            <h2>I am <span id="typing"></span></h2>
             <h2>About Me</h2>
 
             <p>
@@ -392,8 +421,25 @@ a:hover{
             </ul>
 
         </div>
-        <h2>Social Links</h2>
+        <h2>Website Stats</h2>
+<p>👀 Visitors: <span id="count">Loading...</span></p>
+<script>
+fetch("https://api.countapi.xyz/hit/manglesh-portfolio/visits")
+.then(res => res.json())
+.then(data => {
+    document.getElementById("count").innerText = data.value;
+})
+.catch(() => {
+    document.getElementById("count").innerText = "Error";
+});
+</script>
+<h2>Social Links</h2>
+<button onclick="toggleMode()"
+id="themeBtn">
+🌙Dark Mode
+</button>
 <p>
+
     <a 
     href="https://github.com/mangleshkumar36" 
     target="_blank">
@@ -408,6 +454,7 @@ a:hover{
     </a>
 </p>
 
+
 <footer>
     © 2026 Manglesh Kumar | Portfolio
     website
@@ -416,6 +463,9 @@ a:hover{
      </div>
 
 </div>
+<a href="resume.pdf" download>
+📄 Download Resume
+</a>
 <script>
     alert("Welcome to Manglesh Kumar's Portfolio");
 </script>
@@ -430,7 +480,104 @@ function updateClock() {
 setInterval(updateClock, 1000);
 updateClock();
 </script>
+
+<script>
+function toggleMode(){
+
+    document.body.classList.toggle("light-mode");
+
+    let btn = document.getElementById("themeBtn");
+
+    if(document.body.classList.contains("light-mode")){
+        btn.innerHTML = "☀️ Light Mode";
+    }else{
+        btn.innerHTML = "🌙 Dark Mode";
+    }
+}
 </script>
+
+
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+body{
+    background: #e9e9e9;
+
+}
+.container{
+    max-width: 1000px;
+
+}
+footer{
+background:#222;
+    color:white;
+    text-align:center;
+    padding:15px;
+    margin-top:20px;
+}
+
+.right{
+    background:
+    linear-gradient(
+        rgba(255,255,255,0.2),
+        rgba(255,255,255,0.2)
+    ),
+    url("images (2).jpeg");
+
+    background-size: cover;
+}
+
+body{
+    background:#e9e9e9;
+    padding:30px;
+}
+.container{
+    width:85%;
+    margin:20px auto;
+    display:flex;
+    box-shadow:0 0 20px
+     rgba(0,0,0,0.4);
+}
+<script>
+const words = ["Student", "Web Developer", "German Learner", "Future Global Professional"];
+
+let i = 0;
+let j = 0;
+let currentWord = "";
+let isDeleting = false;
+
+function type() {
+
+    currentWord = words[i];
+
+    if(isDeleting){
+        document.getElementById("typing").innerHTML =
+        currentWord.substring(0,j--);
+    }else{
+        document.getElementById("typing").innerHTML =
+        currentWord.substring(0,j++);
+    }
+
+    if(!isDeleting && j === currentWord.length + 1){
+        isDeleting = true;
+        setTimeout(type,1000);
+        return;
+    }
+    if(isDeleting && j === 0){
+        isDeleting = false;
+        i = (i + 1) % words.length;
+    }
+
+    setTimeout(type,100);
+}
+
+type();
+</script>
+
 
 </body>
 </html>
